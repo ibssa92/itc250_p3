@@ -1,6 +1,28 @@
 <?php
 //items.php
 
+/**
+ * Item class stores the data relevant for a menu item:
+ *
+ * Public fields:
+ $ID = 0;
+    public $Name = '';
+    public $Description = '';
+    public $Price = 0;
+    public $Extras = array();
+ * ID - a numeric value for tracking the item
+ * Name - a descriptive name that appears on the menu
+ * Description - short explanation about the food item
+ * Price - the food base price, without extras or tax
+ * Extras - user selected additions from the list of choices.. The extras are food type specific.
+ *
+ *
+ * In addition to these fields, the class has a constructor
+ * and a public method method addExtra() (used by the constructor).
+ *
+ */
+
+//instantiate initial objects representing the types of food offered and add their toppings into an array
 $myItem = new Item(1, 'Enchiladas', 'Three enchiladas smothered in cheese and sauce.', 11.50);
 $myItem->addExtra('Carnitas');
 $myItem->addExtra('Chicken');
@@ -68,6 +90,7 @@ $myItem = new Item(8, 'Mexican Coke', 'In a glass bottle', 2.50);
 $items[] = $myItem;
 
 class Item{
+    //class fields
     public $ID = 0;
     public $Name = '';
     public $Description = '';
