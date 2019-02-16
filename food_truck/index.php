@@ -89,9 +89,8 @@ include 'includes/header.php';
                           <h3 class="text-center">What can we make for you today?</h4>';
                     foreach ($items as $item) {
                         echo '<h2>' . $item->Name . '</h2>
-                              <h4>$' . number_format($item->Price, 2) . '</h4>'
-                              //holds the desired quantity
-                              '<input type="number" name="item_' . $item->ID . ' min="0" placeholder="QTY">';
+                              <h4>$' . number_format($item->Price, 2) . '</h4>
+                              <input type="number" name="item_' . $item->ID . ' min="0" placeholder="QTY">';//holds the desired quantity
                         // if extras exist
                         if (count($item->Extras) > 0) {
                             echo '<div class="toppings">';
