@@ -5,11 +5,6 @@
  * Item class stores the data relevant for a menu item:
  *
  * Public fields:
- $ID = 0;
-    public $Name = '';
-    public $Description = '';
-    public $Price = 0;
-    public $Extras = array();
  * ID - a numeric value for tracking the item
  * Name - a descriptive name that appears on the menu
  * Description - short explanation about the food item
