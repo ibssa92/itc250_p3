@@ -36,7 +36,7 @@ include 'includes/header.php';
                                 // id is the second element of the array
                                 // forcibly cast to an int in the process
                                 $orderID = (int)$order_array[1];
-                                if (is_numeric($numberOfItems) && $numberOfItems > 0) { 
+                                if (is_numeric($numberOfItems) && ctype_digit($numberOfItems) && $numberOfItems > 0) { 
                                     $valid = true;
                                     
                                     //gets item information
@@ -46,10 +46,12 @@ include 'includes/header.php';
                                     //calculates the subtotal of each item ordered
                                     $subtotal += ($numberOfItems * $items[$orderID]->Price);
                     
-                                } elseif  ((is_numeric($numberOfItems) == false && strlen($numberOfItems) > 0) || (is_numeric($numberOfItems) == true && $numberOfItems < 0)){
+                                } elseif  ((is_numeric($numberOfItems) == false && strlen($numberOfItems) > 0) || (is_numeric($numberOfItems) == true && $numberOfItems < 0) || (ctype_digit($numberOfItems) == false && strlen($numberOfItems) > 0)){
                                     $valid = false;
                                     $orderID -= 1; // since array index is 1 smaller
                                     echo '<p style="color:red;"><b>' . $items[$orderID]->Name . ':</b>  '. $numberOfItems . ' is not a valid option.  Item was removed from order.  Please return to the previous page and enter a numeric value.</p>';
+                                } elseif (strlen($numberOfItems) == 0){
+                                    $valid = false;
                                 }
                                 
                             }
