@@ -24,6 +24,7 @@ include 'includes/header.php';
                     echo '<h3>Your order has been placed.</h3>';
                     
                         $subtotal = 0;
+                        $valid = false;
                 
                         //create the order summary showing all the items and toppings ordered,
                         //the subtotal for each item, and a cumulative total cost due.
@@ -35,7 +36,8 @@ include 'includes/header.php';
                                 // id is the second element of the array
                                 // forcibly cast to an int in the process
                                 $orderID = (int)$order_array[1];
-                                if ($numberOfItems > 0) { 
+                                if (is_numeric($numberOfItems) && $numberOfItems > 0) { 
+                                    $valid = true;
                                     
                                     //gets item information
                                     $orderID -= 1; // since array index is 1 smaller
@@ -44,11 +46,15 @@ include 'includes/header.php';
                                     //calculates the subtotal of each item ordered
                                     $subtotal += ($numberOfItems * $items[$orderID]->Price);
                     
+                                } elseif  ((is_numeric($numberOfItems) == false && strlen($numberOfItems) > 0) || (is_numeric($numberOfItems) == true && $numberOfItems < 0)){
+                                    $valid = false;
+                                    $orderID -= 1; // since array index is 1 smaller
+                                    echo '<p style="color:red;"><b>' . $items[$orderID]->Name . ':</b>  '. $numberOfItems . ' is not a valid option.  Item was removed from order.  Please return to the previous page and enter a numeric value.</p>';
                                 }
                                 
                             }
                             // if form name attribute starts with 'extra_', process it as an extra
-                            if (substr($order, 0, 6) == 'extra_'){
+                            if (substr($order, 0, 6) == 'extra_' && $valid == true){
                                 // the extra's name is the second element of the array
                                 echo '<pre>           +' . substr($order, 6) . '   + $0.25</pre>';
                                 $subtotal += 0.25;
@@ -84,7 +90,7 @@ include 'includes/header.php';
                     foreach ($items as $item) {
                         echo '<h2>' . $item->Name . '</h2>
                               <h4>$' . number_format($item->Price, 2) . '</h4>
-                              <input type="number" name="item_' . $item->ID . ' min="0" placeholder="QTY">';//holds the desired quantity
+                              <input type="text" name="item_' . $item->ID . ' placeholder="QTY">';//holds the desired quantity
                         // if extras exist
                         if (count($item->Extras) > 0) {
                             echo '<div class="toppings">';
