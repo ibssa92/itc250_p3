@@ -15,26 +15,21 @@
  *
  *
  */
-
-require 'items.php';
+ require 'items.php';
 include 'includes/header.php';
-
-        //displays a menu of items and allows the user to place an order
+         //displays a menu of items and allows the user to place an order
             define('THIS_PAGE', basename($_SERVER['PHP_SELF']));
-            //checks the input
+            //checks for input
             if (isset($_POST['order'])) {      
                     echo '<h3>Your order has been placed.</h3>';
                     
                         $subtotal = 0;
                 
-                        
                         //create the order summary showing all the items and toppings ordered,
                         //the subtotal for each item, and a cumulative total cost due.
-                    
                         foreach($_POST as $order => $numberOfItems) { // loop the form elements
                             // if form name attribute starts with 'item_', process it as an item
-
-                            if (substr($order, 0, 5) == 'item_') {
+                             if (substr($order, 0, 5) == 'item_') {
                                 // explode the string into an array on the "_"
                                 $order_array = explode('_', $order);
                                 // id is the second element of the array
@@ -55,13 +50,12 @@ include 'includes/header.php';
                             // if form name attribute starts with 'extra_', process it as an extra
                             if (substr($order, 0, 6) == 'extra_'){
                                 // the extra's name is the second element of the array
-                                echo '<pre>           +' . substr($order, 6) . '</pre>';
+                                echo '<pre>           +' . substr($order, 6) . '   + $0.25</pre>';
+                                $subtotal += 0.25;
                             }
                             
                         }
-
-                        
-                        echo '<p>Subtotal: $' . number_format($subtotal, 2) . '</p>';
+                         echo '<p>Subtotal: $' . number_format($subtotal, 2) . '</p>';
                         //calculates and displays the sales tax of subtotal
                         echo '<p>Tax: $' . number_format(($subtotal * 0.101), 2) . '</p>';//10.1% Seattle sales tax, round total to 2 decimal places (note: this does not include additional "soda tax")
                         //calculates and displays the total by adding sales tax to the subtotal
@@ -73,7 +67,6 @@ include 'includes/header.php';
                     //shows a form so users can place an order
                     echo '<div class="col-sm-6" id="content">
                           <h3>Menu</h3>';
-                    //iterate through the item objects and populate the menu with data from the objects
                     foreach ($items as $item) {
                         echo '<div class = "menuItem">
                               <h5 class="foodName">' . $item->Name . '</h5>
@@ -87,6 +80,7 @@ include 'includes/header.php';
                           <div id = "food" class="col-sm-6">
                           <img src="img/food-truck.jpg" alt="Image of FoodTruck">
                           <h3 class="text-center">What can we make for you today?</h4>';
+                    //iterate through the item objects and populate the menu with data from the objects
                     foreach ($items as $item) {
                         echo '<h2>' . $item->Name . '</h2>
                               <h4>$' . number_format($item->Price, 2) . '</h4>
@@ -105,6 +99,5 @@ include 'includes/header.php';
                           
                           </form>';
             }
-
-include 'includes/footer.php';
-?>
+ include 'includes/footer.php';
+?> 
